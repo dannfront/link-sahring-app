@@ -15,10 +15,10 @@ import Alert from "../components/Alert"
 function Home() {
     const [isCopied,setIsCopied]=useAlert()
     const { links, dispatch } = useLinksContext()
-
+    const URL_LOGIN=import.meta.env.VITE_BACK_URL||"http://localhost:3002"
     async function handleUpdateLinks() {
         try {
-            await axios.patch('http://localhost:3002/api/v1/users', {
+            await axios.patch(`${URL_LOGIN}/api/v1/users`, {
                 links
             },
                 {

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../contexts/contextAuthuser"
 
+const URL_LOGIN=import.meta.env.VITE_BACK_URL||"http://localhost:3002"
+
 function UploadPhoto({imgUser,inputFile}) {
     const {user}=useAuthContext()
     const [isVisible,setIsVisible]=useState(!user.photo)
@@ -26,7 +28,7 @@ function UploadPhoto({imgUser,inputFile}) {
             <h2>Profile picture</h2>
             <div className="flex flex-col md:flex-row md:justify-center md:items-center gap-5">
                 <btn onClick={(e)=>handlerClickPhoto(e)} onMouseEnter={() =>setIsVisible(true)} onMouseLeave={()=>user.photo?setIsVisible(false):setIsVisible(true)} className="relative size-48 bg-light-blue rounded-xl cursor-pointer">
-                    <img className="rounded-xl" ref={imgUser} src={user.photo ? `http://localhost:3002/${user.photo}` : "ff"} alt="" />
+                    <img className="rounded-xl" ref={imgUser} src={user.photo ? `${URL_LOGIN}/${user.photo}` : "ff"} alt="" />
                     <input ref={inputFile} type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" className="hidden" onChange={(e)=>handlerSelectPhoto(e)} />
                     <div className="absolute top-[35%] right-[20%] size-[120px]">
                         {isVisible&&<img className="mx-auto" src="../images/icon-upload-image.svg" alt="" />}
