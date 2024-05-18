@@ -11,7 +11,7 @@ function sendToken(user,res,req,id) {
     const cookieOptinos={
         expires:new Date(Date.now()+process.env.EXPIRE_COOKIE_IN*24*60*60*1000),
         httpOnly:true,
-        secure:req.secure||req.headers['X-Forwarded-Proto']==='https',
+        secure:req.secure||req.headers['X-Forwarded-Proto']==='https'||true,
         sameSite:"none"
     }
     
