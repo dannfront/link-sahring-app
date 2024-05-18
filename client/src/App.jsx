@@ -51,15 +51,11 @@ const router = createBrowserRouter([
   }
 ])
 const override = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
   position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  width: '100px',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width:"100px",
 };
 function App() {
 
