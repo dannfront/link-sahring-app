@@ -12,10 +12,11 @@ import Main from "../components/Main"
 import useAlert from "../hooks/useAlert"
 import Alert from "../components/Alert"
 
+const URL_LOGIN=import.meta.env.VITE_BACK_URL||"http://localhost:3002"
+
 function Home() {
     const [isCopied,setIsCopied]=useAlert()
     const { links, dispatch } = useLinksContext()
-    const URL_LOGIN=import.meta.env.VITE_BACK_URL||"http://localhost:3002"
     async function handleUpdateLinks() {
         try {
             await axios.patch(`${URL_LOGIN}/api/v1/users`, {
