@@ -34,6 +34,7 @@ function Login() {
                 }
 
             )
+            console.log(data);
             dispatch({ type: "user", payload: data.data.user })
             setEmail("")
             navigate('/')
