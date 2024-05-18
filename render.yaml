@@ -1,5 +1,5 @@
 staticSites:
-  - name: my-app
+  - name: link-sharing-app
     buildCommand: npm run build
     publishDir: build
     routes:
