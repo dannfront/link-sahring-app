@@ -1,5 +1,4 @@
 import { useState } from "react"
-import 'cropperjs/dist/cropper.css';
 import loadImage from "blueimp-load-image"
 import { useAuthContext } from "../contexts/contextAuthuser"
 
