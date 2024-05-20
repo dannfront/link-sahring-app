@@ -7,6 +7,7 @@ const initialState={
     lastName:"",
     photo:"",
     email:"",
+    selectPhoto:false
 }
 
 function reducer(state,action){
@@ -19,6 +20,10 @@ function reducer(state,action){
             return {...state,email:action.payload}
         case "photo":
             return {...state,photo:action.payload}
+        case "select photo":
+            return {...state,selectPhoto:true}
+        case "deselect Photo":
+            return {...state,selectPhoto:false}
         default:
             break;
     }
@@ -26,13 +31,14 @@ function reducer(state,action){
 
 
 function ContextDataUserProvider({children}) {
-    const [{name,lastName,photo,email},dispatch]=useReducer(reducer,initialState)
+    const [{name,lastName,photo,email,selectPhoto},dispatch]=useReducer(reducer,initialState)
     return(
         <contextDataUser.Provider value={{
             name,
             lastName,
             photo,
             email,
+            selectPhoto,
             dispatch,
         }}>
             {children}

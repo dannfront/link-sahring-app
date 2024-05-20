@@ -1,3 +1,4 @@
+
 import { useEffect } from "react"
 import { useAuthContext } from "../contexts/contextAuthuser"
 import { useNavigate } from "react-router-dom"
@@ -11,8 +12,7 @@ function Protected({ children }) {
     const navigate = useNavigate()
     const { isAuth, dispatch } = useAuthContext()
     const { dispatch:dispatchLinks}=useLinksContext()
-    const { dispatch:dispatchData}=useContextDataUser()
-
+    const { dispatch:dispatchData,selectPhoto}=useContextDataUser()
     useEffect(function () {
 
         async function isVerifed() {
@@ -27,7 +27,7 @@ function Protected({ children }) {
                 dispatchData({type:"lastName",payload:data.data.user?.lastName??""})
                 dispatchData({type:"email",payload:data.data.user?.email??""})
                 dispatchData({type:"photo",payload:data.data.user?.photo??""})
-                
+                dispatchData({type:"deselect Photo"})
             } catch (error) {
                 console.error(error.message);
                 dispatch({ type: "not authenticated" })
@@ -36,7 +36,7 @@ function Protected({ children }) {
         }
 
         isVerifed()
-    }, [dispatch, navigate, isAuth])
+    }, [dispatch, navigate, isAuth,selectPhoto])
 
     return isAuth ? children : null
 }

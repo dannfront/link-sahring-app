@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import axios from "axios"
 import Btn from "../components/Btn"
 import DescriptionSection from "../components/DescriptionSection"
@@ -20,8 +20,16 @@ function Me() {
     const [isCopied,setIsCopied]=useAlert()
     const imgUser = useRef(null)
     const inputFile = useRef(null)
+    const [reload,setReload]=useState(false)
     const [nameEmpty,setNameEmpty]=useState(false)
-    const { name, email, lastName, photo, dispatch } = useContextDataUser()
+    const { name, email, lastName, photo,dispatch } = useContextDataUser()
+
+
+    useEffect(function(){
+        if (!reload)return
+        window.location.reload() 
+    },[reload])
+
 
     async function handlerUpdateData(e) {
         e.preventDefault()
@@ -34,13 +42,14 @@ function Me() {
         formData.append("lastName", lastName)
         if (inputFile.current.files[0] === undefined) formData.append("photo", photo)
         try {
-            const response = await axios.patch(`${URL_LOGIN}/api/v1/users`, formData,
+            await axios.patch(`${URL_LOGIN}/api/v1/users`, formData,
                 {
                     withCredentials: true,
                 }
             )
             setNameEmpty(false)
             setIsCopied(true)
+            setReload(true)
         } catch (error) {
             console.log(error)
         }
@@ -51,11 +60,11 @@ function Me() {
             <Nav />
 
             <Main>
-                <PreviewLinksHome />
+                <PreviewLinksHome imgPreview={imgUser}/>
                 <Section>
                     <DescriptionSection title='Profile Details' descrition='Add your details to create a personal touch to your profile.' />
                     <form onSubmit={(e) => handlerUpdateData(e)}>
-                        <UploadPhoto imgUser={imgUser} inputFile={inputFile} dispatch={dispatch} />
+                        <UploadPhoto imgUser={imgUser} inputFile={inputFile} dispatch={dispatch}/>
 
                         <EditDataUse nameEmpty={nameEmpty}/>
 

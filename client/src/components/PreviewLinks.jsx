@@ -7,9 +7,11 @@ import Rect from "./Rect";
 import TextDataUser from "./TextDataUser";
 import { useLinksContext } from "../contexts/contextLinksUser";
 
-function PreviewLinksHome() {
+
+function PreviewLinksHome({imgPreview}) {
     const { links } = useLinksContext()
     const { user } = useAuthContext()
+    
     return (
         <div className="hidden bg-white rounded-xl p-5  lg:block lg:w-[30rem]">
             <svg className="mx-auto" xmlns="http://www.w3.org/2000/svg" width="308" height="632" fill="none" viewBox="0 0 308 632">
@@ -21,7 +23,7 @@ function PreviewLinksHome() {
                         <circle cx="153.5" cy="112" r="48" fill="#EEE" />
                     </clipPath>
                 </defs>
-                {user.photo ? <ImagePhoneMockup user={user} /> : <CirclePhoneMockup />}
+                {user.photo ? <ImagePhoneMockup imgPreview={imgPreview} /> : <CirclePhoneMockup />}
 
                 {user.name ? <TextDataUser x="50%" y="185">{`${user.name} ${user?.lastName}`}</TextDataUser> : <Rect width="72" height="8" x="117.5" y="185" fill="#EEE" rx="4" />}
 

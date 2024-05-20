@@ -14,11 +14,9 @@ import { useAuthContext } from "../contexts/contextAuthuser"
 
 const URL_LOGIN=import.meta.env.VITE_BACK_URL||"http://localhost:3002"
 
-console.log(URL_LOGIN);
+
 
 function Login() {
-
-    const { dispatch } = useAuthContext()
     const navigate = useNavigate()
     const { email,setEmail, emailEmpty, password,setPassword, passwordEmpty, handdleEmail, handdlePassword, } = useCheck()
     async function handdlerSubmitLogin(e) {
@@ -34,8 +32,6 @@ function Login() {
                 }
 
             )
-            console.log(data);
-            dispatch({ type: "user", payload: data.data.user })
             setEmail("")
             navigate('/')
 
