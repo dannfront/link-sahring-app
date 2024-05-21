@@ -1,18 +1,21 @@
-import { log } from "console"
+import sharp from 'sharp'
 import User from "../model/userModel.js"
-import fs from 'fs'
+
 
 export default async function updateUserController(req, res, next) {
     let newPath
     const lastName=req.body.lastName===""?"" : req.body.lastName
     
     if (req.file) {
+        
         const extension=req.file.originalname.split(".")[1]
         newPath=`uploads/${req.user.id}.${extension}`
-        fs.rename(req.file.path,newPath,(err)=>{
+        
+        await sharp(req.file.buffer).resize(1024,1024,{
+            fit:"cover"
+        }).toFile(newPath,(err)=>{
             if(err)throw err
-            console.log("succes");
-        })
+        })    
     }
 
     const currentUser = {
@@ -24,6 +27,7 @@ export default async function updateUserController(req, res, next) {
     }
 
     const user = await User.findByIdAndUpdate(req.user.id, currentUser, { runValidators: true })
+    
 
     res.status(200).json({
         status: "succes",

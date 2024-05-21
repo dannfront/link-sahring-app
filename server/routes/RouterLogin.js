@@ -5,7 +5,7 @@ import updateUserController from '../controller/updateController.js'
 import previewController from '../controller/previewController.js'
 
 const routerLogin=express.Router()
-const upload=multer({dest:'uploads/'})
+const upload=multer({dest:'uploads/',storage:multer.memoryStorage()})
 
 routerLogin.post('/login',loginController)
 routerLogin.post('/register',registerController)
