@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 import util from "util"
 import User from "../model/userModel.js";
+import { getImageBucket } from "../utils/functionsS3.js";
 
 function sendToken(user,res,req,id) {
 
@@ -10,7 +11,7 @@ function sendToken(user,res,req,id) {
     const cookieOptinos={
         expires:new Date(Date.now()+process.env.EXPIRE_COOKIE_IN*24*60*60*1000),
         httpOnly:true,
-        secure:req.secure||req.headers['x-forwarded-proto'] === 'https',
+        secure:req.secure||req.headers['x-forwarded-proto'] === 'https'||true,
         sameSite:"none"
     }
     
@@ -68,9 +69,6 @@ export async function registerController(req, res, next) {
 
     try {
         const newUser = await User.create(req.body)
-        const token = jwt.sign({ id: newUser._id }, process.env.SECRET_JWT_TOKEN, {
-            expiresIn: process.env.EXPIRE_IN
-        })
 
         sendToken(newUser,res,req,newUser.id)
 
@@ -81,9 +79,13 @@ export async function registerController(req, res, next) {
 
 export async function getUser(req, res, next) {
     const user = await User.findById(req.user.id).select("-links._id")
+    const dataImageAws=await getImageBucket(user.photo)
+    user.photo=dataImageAws
+    
     res.status(200).json({
         status:"succes",
-        user
+        user,
+        
     })
 }
 

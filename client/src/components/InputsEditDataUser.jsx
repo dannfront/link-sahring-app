@@ -1,3 +1,5 @@
+
+
 function InputsEditDataUser({label,type,id,dispatch,typeDis,value,nameEmpty}) {
     return (
         <div className="relative mb-5 last:m-0 md:flex md:justify-between">

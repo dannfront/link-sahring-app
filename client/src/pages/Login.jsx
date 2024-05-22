@@ -10,7 +10,6 @@ import FooterLogin from "../components/FooterLogin"
 import { useCheck } from "../hooks/useCheck"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { useAuthContext } from "../contexts/contextAuthuser"
 
 const URL_LOGIN=import.meta.env.VITE_BACK_URL||"http://localhost:3002"
 
@@ -22,7 +21,7 @@ function Login() {
     async function handdlerSubmitLogin(e) {
         e.preventDefault()
         try {
-            const data = await axios.post(`${URL_LOGIN}/api/v1/users/login`, {
+           await axios.post(`${URL_LOGIN}/api/v1/users/login`, {
                 email,
                 password,
 

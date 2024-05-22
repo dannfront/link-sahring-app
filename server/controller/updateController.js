@@ -1,5 +1,7 @@
 import sharp from 'sharp'
 import User from "../model/userModel.js"
+import { putImageBucket } from '../utils/functionsS3.js'
+
 
 
 export default async function updateUserController(req, res, next) {
@@ -9,13 +11,13 @@ export default async function updateUserController(req, res, next) {
     if (req.file) {
         
         const extension=req.file.originalname.split(".")[1]
-        newPath=`uploads/${req.user.id}.${extension}`
+        newPath=`${req.user.id}.${extension}`
         
-        await sharp(req.file.buffer).resize(1024,1024,{
+        const imageProfile= await sharp(req.file.buffer).resize(1024,1024,{
             fit:"cover"
-        }).toFile(newPath,(err)=>{
-            if(err)throw err
-        })    
+        }).toBuffer()    
+        
+        putImageBucket(imageProfile,newPath)
     }
 
     const currentUser = {
