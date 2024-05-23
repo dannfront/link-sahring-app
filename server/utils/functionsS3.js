@@ -11,7 +11,6 @@ export async function putImageBucket(imageProfile,newPath){
 
     await client.send(command)
 }
-
 export async function getImageBucket(fileNme){
     const command=new GetObjectCommand({
         Bucket:process.env.NAME_BUCKET_AWS,

@@ -10,6 +10,5 @@ const client=new S3Client({
     }
 })
 
-console.log(process.env.REGION_AWS);
 
 export default client

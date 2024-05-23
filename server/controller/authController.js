@@ -14,7 +14,6 @@ function sendToken(user,res,req,id) {
         secure:req.secure||req.headers['x-forwarded-proto'] === 'https'||true,
         sameSite:"none"
     }
-    
     res.cookie('jwt',token,cookieOptinos)
 
     user.password=undefined

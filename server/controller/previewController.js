@@ -4,7 +4,6 @@ import { getImageBucket } from "../utils/functionsS3.js"
 export default async function previewController(req, res, next) {
 
     try {
-
         const { id } = req.params
 
         const user = await User.findById(id).select("-_id")
