@@ -17,7 +17,7 @@ function sendToken(user,res,req,id) {
     res.cookie('jwt',token,cookieOptinos)
 
     user.password=undefined
-
+    
     res.status(200).json({
         status:"succes",
         token,
@@ -57,7 +57,6 @@ export async function loginController(req, res, next) {
 
         const user = await User.findOne({ email }).select("password")
         if (!user || !await user.correctPasword(password, user.password)) throw new Error("incorrect password or email")
-        
         sendToken(user,res,req,user.id)
     } catch (error) {
         next(error)
@@ -78,8 +77,8 @@ export async function registerController(req, res, next) {
 
 export async function getUser(req, res, next) {
     const user = await User.findById(req.user.id).select("-links._id")
-    const dataImageAws=await getImageBucket(user.photo)
-    user.photo=dataImageAws
+
+    if(user.photo) user.photo=await getImageBucket(user.photo)
     
     res.status(200).json({
         status:"succes",
